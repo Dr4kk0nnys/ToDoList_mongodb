@@ -11,10 +11,15 @@ class Main {
 
             this.database = new Database()
 
-            await this.database.connection()
-            while (true) {
-                const response = await this.handleUserInput()
-                if (!response) break
+            try {
+                await this.database.connection()
+
+                while (true) {
+                    const response = await this.handleUserInput()
+                    if (response) break
+                }
+            } catch (error) {
+                throw error
             }
 
             this.database.closeConnection()
@@ -33,8 +38,52 @@ class Main {
                 this.displayDatabaseCode(0)
                 break
 
+            case 'read':
+                const objects = await this.database.read({
+                    'title': this.getUserInput('Title: ')
+                }).toArray()
+
+                console.log(objects)
+                break
+
+            case 'readAll':
+                console.log(await this.database.readAll().toArray())
+                break
+
+            case 'removeOne':
+                await this.database.removeOne({
+                    'title': this.getUserInput('Title: ')
+                })
+                this.displayDatabaseCode(1)
+                break
+
+            case 'removeMany':
+                await this.database.removeMany({
+                    'title': this.getUserInput('Title: ')
+                })
+                this.displayDatabaseCode(1)
+                break
+
+            case 'updateOne':
+                await this.database.updateOne({
+                    'title': this.getUserInput("Object's name to update: "),
+                    'newTitle': this.getUserInput('New Title: '),
+                    'newInfo': this.getUserInput('New Info: ')
+                })
+                this.displayDatabaseCode(2)
+                break
+
+            case 'updateMany':
+                await this.database.updateMany({
+                    'title': this.getUserInput("Object's name to update: "),
+                    'newTitle': this.getUserInput('New Title: '),
+                    'newInfo': this.getUserInput('New Info: ')
+                })
+                this.displayDatabaseCode(2)
+                break
+
             case 'exit':
-                return false
+                return true
         }
     }
 
@@ -47,74 +96,15 @@ class Main {
             case 0:
                 return console.log('Successfully saved into the database!')
             case 1:
-                return console.log('')
+                return console.log('Successfully removed from the database!')
+            case 2:
+                return console.log('Successfully updated from the database!')
         }
     }
 
     showOptions() {
-        console.log('add / removeOne / removeMany / read / readAll / update')
+        console.log('add / removeOne / removeMany / read / readAll / updateOne / updateMany')
     }
 }
 
 new Main()
-// async function main() {
-
-//     let flag = false
-//     while (!flag) {
-//         const userInput = input('> ')
-
-//         switch (userInput) {
-//             case 'add':
-//                 const title = input('TODO Title: ')
-//                 const todo = input('TODO Info: ')
-
-//                 await database.insert({ title, todo })
-
-//                 console.log('Successfully added!')
-//                 break
-
-//             case 'read':
-//                 const todoTitle = input('TODO Title: ')
-//                 const object = database.read({ 'title': todoTitle })
-//                 console.log(await object.toArray())
-//                 break
-//             case 'readAll':
-//                 const objects = database.readAll()
-
-//                 while (await objects.hasNext()) {
-//                     const object = await objects.next()
-//                     console.log(object)
-//                 }
-//                 break
-
-//             case 'removeOne':
-//                 const removeTitle = input('TODO Title you want to remove: ')
-//                 await database.removeOne({ 'title': removeTitle })
-//                 console.log('Successfully removed!')
-//                 break
-//             case 'removeMany':
-//                 const removeTitles = input('TODO Title you want to remove: ')
-//                 await database.removeMany({ 'title': removeTitles })
-//                 console.log('Successfully removed!')
-//                 break
-
-//             case 'update':
-//                 const updateTitle = input('TODO Title you want to update: ')
-//                 const newTitle = input('New title: ')
-//                 const newInfo = input('New todo info: ')
-
-//                 await database.update(updateTitle, newTitle, newInfo)
-
-//                 console.log('Updated successfully!')
-//                 break
-
-//             case 'exit':
-//                 flag = true
-//                 break
-//         }
-//     }
-
-//     database.closeConnection()
-// }
-
-// main()

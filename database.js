@@ -72,11 +72,23 @@ class Database {
         }
     }
 
-    async update(title, newTitle, newInfo) {
+    async updateOne({ title, newTitle, newInfo }) {
         try {
-            await this.collection.updateOne({
-                title
-            },
+            await this.collection.updateOne({ title },
+                {
+                    '$set': {
+                        'title': newTitle,
+                        'todo': newInfo
+                    }
+                })
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async updateMany({ title, newTitle, newInfo }) {
+        try {
+            await this.collection.updateMany({ title },
                 {
                     '$set': {
                         'title': newTitle,
