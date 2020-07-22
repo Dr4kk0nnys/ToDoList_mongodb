@@ -1,4 +1,4 @@
-gimport Mongo from 'mongodb'
+import Mongo from 'mongodb'
 const MongoClient = Mongo.MongoClient
 
 import { } from 'dotenv/config.js'
@@ -6,15 +6,7 @@ import { } from 'dotenv/config.js'
 
 class Database {
     constructor() {
-        (async () => {
-            this.client = new MongoClient(process.env.ATLAS_URI, { useUnifiedTopology: true })
-
-            try {
-                await this.connection()
-            } catch (error) {
-                throw error
-            }
-        })()
+        this.client = new MongoClient(process.env.ATLAS_URI, { useUnifiedTopology: true })
     }
 
     async connection() {
@@ -35,13 +27,12 @@ class Database {
         this.client.close()
     }
 
-    async insert(object = {}) {
+    async insert({ title, todo }) {
         try {
-            await this.collection.insertOne(object)
+            await this.collection.insertOne({ title, todo })
         } catch (error) {
             throw error
         }
-
     }
 
     read({ title }) {
