@@ -49,6 +49,45 @@ class Database {
         const objects = this.collection.find({})
         return objects
     }
+
+    async removeOne({ title }) {
+        /*
+            * Difference between removeOne and removeMany is:
+            * DeleteOne finds a match: delete the match and return the object
+            * DeleteMany finds a match: delete the match and keep searching for more matches, if found more, it deletes it as well
+                * if deleteMany finds 1000 matches, it deletes the 1000 matches ( very dangerous )
+            * DeleteMany is a bit slow, since it loops through the entire database searching for matches
+        */
+        try {
+            await this.collection.deleteOne({ title })
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async removeMany({ title }) {
+        try {
+            await this.collection.deleteMany({ title })
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async update(title, newTitle, newInfo) {
+        try {
+            await this.collection.updateOne({
+                title
+            },
+                {
+                    '$set': {
+                        'title': newTitle,
+                        'todo': newInfo
+                    }
+                })
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 export default Database
