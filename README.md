@@ -1,7 +1,7 @@
 ## TODO List with NodeJS and MongoDB
 
 The TODO List will consist in a terminal app with a database connection.  
-**NOTE** The database connection has to be made by you ( Check the [Installation Guide](https://github.com/Dr4kk0nnys/ToDoList_mongodb/blob/master/INSTALATION_GUIDE.md) ).  
+**NOTE** The database connection has to be made by you ( Check the [Installation Guide](https://github.com/Dr4kk0nnys/ToDoList_mongodb/blob/master/INSTALLATION_GUIDE.md) ).  
 
 ## Dependencies
 * [MongoDB](https://www.mongodb.com/)
