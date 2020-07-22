@@ -87,9 +87,7 @@ class Main {
         }
     }
 
-    getUserInput(text = '> ') {
-        return input(text)
-    }
+    getUserInput(text = '> ') { return input(text) }
 
     displayDatabaseCode(code = 4) {
         switch (code) {
