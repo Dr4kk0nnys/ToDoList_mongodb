@@ -82,8 +82,7 @@ class Main {
                 this.displayDatabaseCode(2)
                 break
 
-            case 'exit':
-                return true
+            case 'exit': return true
         }
     }
 
