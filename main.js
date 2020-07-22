@@ -93,12 +93,9 @@ class Main {
 
     displayDatabaseCode(code = 4) {
         switch (code) {
-            case 0:
-                return console.log('Successfully saved into the database!')
-            case 1:
-                return console.log('Successfully removed from the database!')
-            case 2:
-                return console.log('Successfully updated from the database!')
+            case 0: return console.log('Successfully saved into the database!')
+            case 1: return console.log('Successfully removed from the database!')
+            case 2: return console.log('Successfully updated from the database!')
         }
     }
 
